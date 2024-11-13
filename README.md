@@ -53,49 +53,49 @@
         <th>Текст</th>
         <th>Фон</th>
     </tr>
-    <tr  align="center">
+    <tr>
         <td>Черный</td>
-        <td><code>30</code></td>
-        <td><code>40</code></td>
+        <td align="center"><code>30</code></td>
+        <td align="center"><code>40</code></td>
     </tr>
     <tr>
         <td>Красный</td>
-        <td><code>31</code></td>
-        <td><code>41</code></td>
+        <td align="center"><code>31</code></td>
+        <td align="center"><code>41</code></td>
     </tr>
     <tr>
         <td>Зеленый</td>
-        <td><code>32</code></td>
-        <td><code>42</code></td>
+        <td align="center"><code>32</code></td>
+        <td align="center"><code>42</code></td>
     </tr>
     <tr>
         <td>Жёлтый</td>
-        <td><code>33</code></td>
-        <td><code>43</code></td>
+        <td align="center"><code>33</code></td>
+        <td align="center"><code>43</code></td>
     </tr>
     <tr>
         <td>Синий</td>
-        <td><code>34</code></td>
-        <td><code>44</code></td>
+        <td  align="center"><code>34</code></td>
+        <td  align="center"><code>44</code></td>
     </tr>
     <tr>
         <td>Фиолетовый</td>
-        <td><code>35</code></td>
-        <td><code>45</code></td>
+        <td align="center"><code>35</code></td>
+        <td align="center"><code>45</code></td>
     </tr>
     <tr>
         <td>Бирюзовый</td>
-        <td><code>36</code></td>
-        <td><code>46</code></td>
+        <td align="center"><code>36</code></td>
+        <td align="center"><code>46</code></td>
     </tr>
     <tr>
         <td>Белый</td>
-        <td><code>37</code></td>
-        <td><code>47</code></td>
+        <td align="center"><code>37</code></td>
+        <td align="center"><code>47</code></td>
     </tr>
     <tr>
         <td>Сброс</td>
-        <td colspan=2><code>0</code></td>
+        <td align="center" colspan=2><code>0</code></td>
     </tr>
 </table>
 
