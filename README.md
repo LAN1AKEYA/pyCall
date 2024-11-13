@@ -49,7 +49,7 @@
 
 <table>
     <tr>
-        <th>Цвет</th>
+        <th align="left">Цвет</th>
         <th>Текст</th>
         <th>Фон</th>
     </tr>
