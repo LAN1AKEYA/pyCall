@@ -27,29 +27,22 @@
         <th>Описание</th>
     </tr>
     <tr>
-        <td>```firstDefaultColor```</td>
-        <td></td>
+        <td>firstDefaultColor</td>
+        <td>первый стандартный цвет</td>
     </tr>
         <tr>
-        <td></td>
-        <td></td>
+        <td>secondDefaultColor</td>
+        <td>второй стандартный цвет</td>
     </tr>
         <tr>
-        <td></td>
-        <td></td>
+        <td>firstAccentColor</td>
+        <td>первый акцентный цвет</td>
     </tr>
         <tr>
-        <td></td>
-        <td></td>
+        <td>secondAccentColor</td>
+        <td>второй акцентный цвет</td>
     </tr>
 </table>
-
-|   Свойство                    |   Описание                |
-|-------------------------------|---------------------------|
-|   ```firstDefaultColor```     |   первый стандартный цвет |
-|   ```secondDefaultColor```    |   второй стандартный цвет |
-|   ```firstAccentColor```      |   первый акцентный цвет   |
-|   ```secondAccentColor```     |   второй акцентный цвет   |
 
 Каждое свойство принимает в себя любое колличество значений.  
 Цвета кодируются встроенными средствами языка Python:
