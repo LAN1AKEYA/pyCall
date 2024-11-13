@@ -27,7 +27,7 @@
         <th>Описание</th>
     </tr>
     <tr>
-        <td>firstDefaultColor</td>
+        <td><code>firstDefaultColor</code></td>
         <td>первый стандартный цвет</td>
     </tr>
         <tr>
