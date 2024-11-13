@@ -53,7 +53,7 @@
         <th>Текст</th>
         <th>Фон</th>
     </tr>
-    <tr>
+    <tr  align="center">
         <td>Черный</td>
         <td><code>30</code></td>
         <td><code>40</code></td>
