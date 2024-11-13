@@ -21,23 +21,23 @@
 ### colors
 Данный параметр хранит в себе настройки темы. Всего имеется 4 свойства:
 
-<table align="left">
-    <tr>
+<table>
+    <tr align="left">
         <th>Свойство</th>
         <th>Описание</th>
     </tr>
-    <tr>
+    <tr align="left">
         <td>Первый стандартный цвет</td>
         <td><code>firstDefaultColor</code></td>
-    </tr>
+    </tr align="left">
         <tr>
         <td>Второй стандартный цвет</td>
         <td><code>secondDefaultColor</code></td>
-    </tr>
+    </tr align="left">
         <tr>
         <td>Первый акцентный цвет</td>
         <td><code>firstAccentColor</code></td>
-    </tr>
+    </tr align="left">
         <tr>
         <td>Второй акцентный цвет</td>
         <td><code>secondAccentColor</code></td>
