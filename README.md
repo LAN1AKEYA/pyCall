@@ -27,20 +27,20 @@
         <th>Описание</th>
     </tr>
     <tr>
+        <td>Первый стандартный цвет</td>
         <td><code>firstDefaultColor</code></td>
-        <td>первый стандартный цвет</td>
     </tr>
         <tr>
-        <td>secondDefaultColor</td>
-        <td>второй стандартный цвет</td>
+        <td>Второй стандартный цвет</td>
+        <td><code>secondDefaultColor</code></td>
     </tr>
         <tr>
-        <td>firstAccentColor</td>
-        <td>первый акцентный цвет</td>
+        <td>Первый акцентный цвет</td>
+        <td><code>firstAccentColor</code></td>
     </tr>
         <tr>
-        <td>secondAccentColor</td>
-        <td>второй акцентный цвет</td>
+        <td>Второй акцентный цвет</td>
+        <td><code>secondAccentColor</code></td>
     </tr>
 </table>
 
