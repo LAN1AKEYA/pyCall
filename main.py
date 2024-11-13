@@ -1,7 +1,7 @@
 from json import load
 from datetime import datetime
 from os import get_terminal_size
-import math
+import math, sys
 dayNow = datetime.today().weekday()
 timeNow = datetime.now().hour * 60 + datetime.now().minute
 maxLen = 0
@@ -30,12 +30,32 @@ def check(number, data, thisDay):
 
 with open('/lib/calls/data-call.json', 'r', encoding='utf-8') as json_file:
     data = load(json_file)
-    def formatInvert(t):
-        return f'\033[{data['colors']['secondDefaultColor'][0]}m\033[{data['colors']['secondDefaultColor'][1]}m{t}\033[{data['colors']['firstDefaultColor'][0]}m\033[{data['colors']['firstDefaultColor'][1]}m'
+    def getColor(color):
+        if len(data['colors'][color]) == 0:
+            return '\033[0m'
+        retStr = ''
+        for item in data['colors'][color]:
+            try:
+                item = int(item)
+                if (item == 0 or (30 <= item <= 37) or ((40 <= item <= 47))):
+                    retStr += f'\033[{item}m'
+                else:
+                    #print(f'\033[31merror, out of range: \033[33mcolors: {color} - {item}\033[0m')
+                    retStr += '\033[0m'
+                    break
+            except:
+                #if (item != ''):
+                    #print(f'\033[31merror, remove lettes: \033[33mcolors: {color} - {item}\033[0m')
+                retStr += '\033[0m'
+                break
+        return retStr 
+
+    def formatInvert(t):            
+        return f'{getColor('secondDefaultColor')}{t}{getColor('firstDefaultColor')}'
     def formatB(t):
-        return f'\033[{data['colors']['firstAccentColor'][0]}m\033[{data['colors']['firstAccentColor'][1]}m{t}\033[{data['colors']['firstDefaultColor'][0]}m\033[{data['colors']['firstDefaultColor'][1]}m'
+        return f'{getColor('firstAccentColor')}{t}{getColor('firstDefaultColor')}'
     def formatLB(t):
-        return f'\033[{data['colors']['secondAccentColor'][0]}m\033[{data['colors']['secondAccentColor'][1]}m{t}\033[{data['colors']['firstDefaultColor'][0]}m\033[{data['colors']['firstDefaultColor'][1]}m'
+        return f'{getColor('secondAccentColor')}{t}{getColor('firstDefaultColor')}'
     if (data['clearTerminal']):
         from os import name, system
         system('cls' if name == 'nt' else 'clear')
@@ -66,3 +86,4 @@ with open('/lib/calls/data-call.json', 'r', encoding='utf-8') as json_file:
             allStr += f"{(' ' if (d == 0) else '')}{days[d][l]}{((' | ') if (d != len(days) - 1) else ' ' * (halfPadding + 1 if terminalWidth % 2 == 0 else halfPadding))}"
     allStr += f"{('-' * terminalWidth)}\n{description}\n"
     print(allStr)
+

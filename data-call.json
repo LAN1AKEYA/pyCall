@@ -31,16 +31,16 @@
     },
     "colors": {
         "firstDefaultColor": [
-            "37", "0"
+            "0"
         ],
         "secondDefaultColor": [
             "30", "47"
         ],
         "firstAccentColor": [
-            "37", "44"
+            "0", "44"
         ],
         "secondAccentColor": [
-            "37", "46"
+            "0", "46"
         ]
     },
     "clearTerminal": true,
