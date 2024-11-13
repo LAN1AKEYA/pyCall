@@ -95,7 +95,7 @@
     </tr>
     <tr>
         <td>Сброс</td>
-        <td rowspan=3><code>0</code></td>
+        <td colspan=2><code>0</code></td>
     </tr>
 </table>
 
