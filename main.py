@@ -88,6 +88,5 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
             allStr += f"{(' ' if (d == 0) else '')}{days[d][l]}{((' | ') if (d != len(days) - 1) else ' ' * (halfPadding + 1 if terminalWidth % 2 == 0 else halfPadding))}"
     allStr += f"{('-' * terminalWidth)}\n{description}\n"
     print(allStr)
-    print(currentDir)
 
 
