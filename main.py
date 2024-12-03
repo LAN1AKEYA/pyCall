@@ -1,6 +1,6 @@
 from json import load
 from datetime import datetime
-from os import get_terminal_size
+from os import get_terminal_size, getcwdb
 import math, sys
 dayNow = datetime.today().weekday()
 timeNow = datetime.now().hour * 60 + datetime.now().minute
@@ -8,6 +8,8 @@ maxLen = 0
 terminalWidth = get_terminal_size().columns
 tableWidth = 55
 halfPadding = int((terminalWidth - tableWidth) / 2)
+nl = '\n'
+currentDir = str(getcwdb()).rstrip("'").lstrip("b'")
 
 def check(number, data, thisDay):
     global nxtLessSwitch, dayNow, description
@@ -28,7 +30,7 @@ def check(number, data, thisDay):
         else:
             return data
 
-with open('/lib/calls/data-call.json', 'r', encoding='utf-8') as json_file:
+with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
     data = load(json_file)
     def getColor(color):
         if len(data['colors'][color]) == 0:
@@ -51,11 +53,11 @@ with open('/lib/calls/data-call.json', 'r', encoding='utf-8') as json_file:
         return retStr 
 
     def formatInvert(t):            
-        return f'{getColor('secondDefaultColor')}{t}{getColor('firstDefaultColor')}'
+        return f"{getColor('secondDefaultColor')}{t}{getColor('firstDefaultColor')}"
     def formatB(t):
-        return f'{getColor('firstAccentColor')}{t}{getColor('firstDefaultColor')}'
+        return f"{getColor('firstAccentColor')}{t}{getColor('firstDefaultColor')}"
     def formatLB(t):
-        return f'{getColor('secondAccentColor')}{t}{getColor('firstDefaultColor')}'
+        return f"{getColor('secondAccentColor')}{t}{getColor('firstDefaultColor')}"
     if (data['clearTerminal']):
         from os import name, system
         system('cls' if name == 'nt' else 'clear')
@@ -66,7 +68,7 @@ with open('/lib/calls/data-call.json', 'r', encoding='utf-8') as json_file:
     for item in daysInfo.items():
         if dayNow in item[1]:
             dayNow = item[0]
-    allStr = f"{(' ' * (terminalWidth))}{formatInvert('\n' + ' ' * (int(halfPadding)))}{formatInvert('    Понедельник   | Вторник-Пятница  |     Суббота      ')}{formatInvert(' ' * (halfPadding if terminalWidth % 2 == 0 else halfPadding - 1)) + '\n' + ('-' * terminalWidth)}\n"
+    allStr = f"{(' ' * (terminalWidth))}{formatInvert(nl + ' ' * (int(halfPadding)))}{formatInvert('    Понедельник   | Вторник-Пятница  |     Суббота      ')}{formatInvert(' ' * (halfPadding if terminalWidth % 2 == 0 else halfPadding - 1)) + nl + ('-' * terminalWidth)}{nl}"
     description = formatInvert(f"{' ' * (13 + halfPadding)}Нет предстоящих/нынеидущих пар{' ' * (13 + (halfPadding if terminalWidth % 2 == 0 else halfPadding - 1))}")
     for day in data['call']:
         maxLen = len(data['call'][day]) if maxLen < len(data['call'][day]) else maxLen
@@ -86,4 +88,6 @@ with open('/lib/calls/data-call.json', 'r', encoding='utf-8') as json_file:
             allStr += f"{(' ' if (d == 0) else '')}{days[d][l]}{((' | ') if (d != len(days) - 1) else ' ' * (halfPadding + 1 if terminalWidth % 2 == 0 else halfPadding))}"
     allStr += f"{('-' * terminalWidth)}\n{description}\n"
     print(allStr)
+    print(currentDir)
+
 
