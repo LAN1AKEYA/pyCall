@@ -1,6 +1,6 @@
 from json import load
 from datetime import datetime
-from os import get_terminal_size, getcwdb
+from os import get_terminal_size, getcwdb, path
 import math, sys
 dayNow = datetime.today().weekday()
 timeNow = datetime.now().hour * 60 + datetime.now().minute
@@ -9,7 +9,9 @@ terminalWidth = get_terminal_size().columns
 tableWidth = 55
 halfPadding = int((terminalWidth - tableWidth) / 2)
 nl = '\n'
-currentDir = str(getcwdb()).rstrip("'").lstrip("b'")
+
+
+currentDir = path.dirname(path.realpath(__file__))
 
 def check(number, data, thisDay):
     global nxtLessSwitch, dayNow, description
@@ -88,5 +90,3 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
             allStr += f"{(' ' if (d == 0) else '')}{days[d][l]}{((' | ') if (d != len(days) - 1) else ' ' * (halfPadding + 1 if terminalWidth % 2 == 0 else halfPadding))}"
     allStr += f"{('-' * terminalWidth)}\n{description}\n"
     print(allStr)
-
-
