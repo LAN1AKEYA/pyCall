@@ -41,5 +41,5 @@
         ]
     },
     "clearTerminal": true,
-    "showTime": false
+    "showTime": true
 }
