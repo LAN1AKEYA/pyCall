@@ -41,6 +41,14 @@
         ]
     },
     "clearTerminal": true,
-    "showTime": true,
+    "time": {
+        "show": true,
+        "preset": {
+            "hrs": true,
+            "min": true,
+            "sec": true
+        },
+        "clock": false
+    },
     "flowMode": true
 }

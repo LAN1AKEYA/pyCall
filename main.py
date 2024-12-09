@@ -63,15 +63,32 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
 
 
     def iteration():
-            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth, description
-            dayNow = datetime.today().weekday()
-            timeNow = datetime.now().hour * 60 + datetime.now().minute
-            terminalWidth = get_terminal_size().columns
-            halfPadding = int((terminalWidth - tableWidth) / 2)
+            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth, description, iterator
             if (data['clearTerminal']):
                 system('cls' if name == 'nt' else 'clear')
-            if (data["showTime"]):
-                print('\n' + formatInvert(f"{' ' * ((round(terminalWidth / 2) - 1 if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}{round(math.floor(timeNow / 60))}:{(timeNow % 60) if (timeNow % 60) > 9 else '0' + str((timeNow % 60))}{' ' * ((round(terminalWidth / 2) if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}"))
+            dayNow = datetime.today().weekday()
+            terminalWidth = get_terminal_size().columns
+            sec = str(datetime.now().second) if datetime.now().second > 9 else str(0) + str(datetime.now().second)
+            min = str(datetime.now().minute) if datetime.now().minute > 9 else str(0) + str(datetime.now().minute)
+            hrs = str(datetime.now().hour) if datetime.now().hour > 9 else str(0) + str(datetime.now().hour)
+            timeNow = int(hrs) * 60 + int(min)
+            if (data['time']['clock']):
+                iterator = not iterator
+            
+
+            if (data["time"]["show"]):
+                time = ''
+                if (data['time']['preset']['hrs']):
+                    time += hrs + (':' if (iterator) else ' ')
+                if (data['time']['preset']['min']):
+                    time += min + (':' if (iterator) else ' ')
+                if (data['time']['preset']['sec']):
+                    time += sec
+                timePadCounter = math.floor((terminalWidth / 2) - (len(time) / 2))
+                print(nl + formatInvert(str(' ' * timePadCounter) + time + (' ' * (timePadCounter if (terminalWidth == timePadCounter * 2 + len(time)) else timePadCounter + 1))))
+
+            halfPadding = int((terminalWidth - tableWidth) / 2)
+
             daysInfo = data['associations']
             for item in daysInfo.items():
                 if dayNow in item[1]:
@@ -100,8 +117,9 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
                 print('press Enter to stop')
 
 
+    iterator = True
 
-    def loop(done, interval=1):
+    def loop(done, interval=0.5):
         while not done.wait(interval):
             iteration()
         
