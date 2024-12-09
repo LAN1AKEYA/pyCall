@@ -32,6 +32,8 @@ def check(number, data, thisDay):
 
 with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
     data = load(json_file)
+    if (data['clearTerminal']):
+            from os import name, system
     def getColor(color):
         if len(data['colors'][color]) == 0:
             return '\033[0m'
@@ -61,13 +63,12 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
 
 
     def iteration():
-            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth
+            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth, description
             dayNow = datetime.today().weekday()
             timeNow = datetime.now().hour * 60 + datetime.now().minute
             terminalWidth = get_terminal_size().columns
             halfPadding = int((terminalWidth - tableWidth) / 2)
             if (data['clearTerminal']):
-                from os import name, system
                 system('cls' if name == 'nt' else 'clear')
             if (data["showTime"]):
                 print('\n' + formatInvert(f"{' ' * ((round(terminalWidth / 2) - 1 if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}{round(math.floor(timeNow / 60))}:{(timeNow % 60) if (timeNow % 60) > 9 else '0' + str((timeNow % 60))}{' ' * ((round(terminalWidth / 2) if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}"))
