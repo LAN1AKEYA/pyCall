@@ -2,12 +2,10 @@ from json import load
 from datetime import datetime
 from os import get_terminal_size, getcwdb, path
 import math, sys
-dayNow = datetime.today().weekday()
-timeNow = datetime.now().hour * 60 + datetime.now().minute
+from time import sleep
+
 maxLen = 0
-terminalWidth = get_terminal_size().columns
 tableWidth = 55
-halfPadding = int((terminalWidth - tableWidth) / 2)
 nl = '\n'
 
 
@@ -60,33 +58,58 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
         return f"{getColor('firstAccentColor')}{t}{getColor('firstDefaultColor')}"
     def formatLB(t):
         return f"{getColor('secondAccentColor')}{t}{getColor('firstDefaultColor')}"
-    if (data['clearTerminal']):
-        from os import name, system
-        system('cls' if name == 'nt' else 'clear')
-    if (data["showTime"]):
-        print('\n' + formatInvert(f"{' ' * ((round(terminalWidth / 2) - 1 if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}{round(math.floor(timeNow / 60))}:{(timeNow % 60) if (timeNow % 60) > 9 else '0' + str((timeNow % 60))}{' ' * ((round(terminalWidth / 2) if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}"))
 
-    daysInfo = data['associations']
-    for item in daysInfo.items():
-        if dayNow in item[1]:
-            dayNow = item[0]
-    allStr = f"{(' ' * (terminalWidth))}{formatInvert(nl + ' ' * (int(halfPadding)))}{formatInvert('    Понедельник   | Вторник-Пятница  |     Суббота      ')}{formatInvert(' ' * (halfPadding if terminalWidth % 2 == 0 else halfPadding - 1)) + nl + ('-' * terminalWidth)}{nl}"
-    description = formatInvert(f"{' ' * (13 + halfPadding)}Нет предстоящих/нынеидущих пар{' ' * (13 + (halfPadding if terminalWidth % 2 == 0 else halfPadding - 1))}")
-    for day in data['call']:
-        maxLen = len(data['call'][day]) if maxLen < len(data['call'][day]) else maxLen
-    days = []
-    for day in data['call']:
-        lessons = []
-        nxtLessSwitch = True
-        for l in range(0, maxLen):
-            try:
-                lessons.append(f"{str(l + 1)}. {check(l + 1, data['call'][day][l], day)}")
-            except IndexError:
-                lessons.append(' ' * 16)
-        days.append(lessons)
-    for l in range(0, len(days[0])):
-        allStr += ' ' * halfPadding
-        for d in range(0, len(days)):
-            allStr += f"{(' ' if (d == 0) else '')}{days[d][l]}{((' | ') if (d != len(days) - 1) else ' ' * (halfPadding + 1 if terminalWidth % 2 == 0 else halfPadding))}"
-    allStr += f"{('-' * terminalWidth)}\n{description}\n"
-    print(allStr)
+
+    def iteration():
+            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth
+            dayNow = datetime.today().weekday()
+            timeNow = datetime.now().hour * 60 + datetime.now().minute
+            terminalWidth = get_terminal_size().columns
+            halfPadding = int((terminalWidth - tableWidth) / 2)
+            if (data['clearTerminal']):
+                from os import name, system
+                system('cls' if name == 'nt' else 'clear')
+            if (data["showTime"]):
+                print('\n' + formatInvert(f"{' ' * ((round(terminalWidth / 2) - 1 if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}{round(math.floor(timeNow / 60))}:{(timeNow % 60) if (timeNow % 60) > 9 else '0' + str((timeNow % 60))}{' ' * ((round(terminalWidth / 2) if (terminalWidth % 2) == 0 else round(math.floor(terminalWidth / 2))) - 2)}"))
+            daysInfo = data['associations']
+            for item in daysInfo.items():
+                if dayNow in item[1]:
+                    dayNow = item[0]
+            allStr = f"{(' ' * (terminalWidth))}{formatInvert(nl + ' ' * (int(halfPadding)))}{formatInvert('    Понедельник   | Вторник-Пятница  |     Суббота      ')}{formatInvert(' ' * (halfPadding if terminalWidth % 2 == 0 else halfPadding - 1)) + nl + ('-' * terminalWidth)}{nl}"
+            description = formatInvert(f"{' ' * (13 + halfPadding)}Нет предстоящих/нынеидущих пар{' ' * (13 + (halfPadding if terminalWidth % 2 == 0 else halfPadding - 1))}")
+            for day in data['call']:
+                maxLen = len(data['call'][day]) if maxLen < len(data['call'][day]) else maxLen
+            days = []
+            for day in data['call']:
+                lessons = []
+                nxtLessSwitch = True
+                for l in range(0, maxLen):
+                    try:
+                        lessons.append(f"{str(l + 1)}. {check(l + 1, data['call'][day][l], day)}")
+                    except IndexError:
+                        lessons.append(' ' * 16)
+                days.append(lessons)
+            for l in range(0, len(days[0])):
+                allStr += ' ' * halfPadding
+                for d in range(0, len(days)):
+                    allStr += f"{(' ' if (d == 0) else '')}{days[d][l]}{((' | ') if (d != len(days) - 1) else ' ' * (halfPadding + 1 if terminalWidth % 2 == 0 else halfPadding))}"
+            allStr += f"{('-' * terminalWidth)}\n{description}\n"
+            print(allStr)
+            if (data["flowMode"]):
+                print('press Enter to stop')
+
+
+
+    def loop(done, interval=1):
+        while not done.wait(interval):
+            iteration()
+        
+    if (data["flowMode"]):
+        iteration()
+        from threading import Event, Thread
+        done = Event()
+        Thread(target=loop, args=[done], daemon=True).start()
+        input()
+        done.set()  # break the loop
+    else:
+        iteration()

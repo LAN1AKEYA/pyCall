@@ -41,5 +41,6 @@
         ]
     },
     "clearTerminal": true,
-    "showTime": true
+    "showTime": true,
+    "flowMode": false
 }
