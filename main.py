@@ -44,12 +44,9 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
                 if (item == 0 or (30 <= item <= 37) or ((40 <= item <= 47))):
                     retStr += f'\033[{item}m'
                 else:
-                    #print(f'\033[31merror, out of range: \033[33mcolors: {color} - {item}\033[0m')
                     retStr += '\033[0m'
                     break
             except:
-                #if (item != ''):
-                    #print(f'\033[31merror, remove lettes: \033[33mcolors: {color} - {item}\033[0m')
                 retStr += '\033[0m'
                 break
         return retStr 
@@ -63,7 +60,7 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
 
 
     def iteration():
-            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth, description, iterator
+            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth, description, iterator, nxtLessSwitch
             if (data['clearTerminal']):
                 system('cls' if name == 'nt' else 'clear')
             dayNow = datetime.today().weekday()
@@ -129,6 +126,6 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
         done = Event()
         Thread(target=loop, args=[done], daemon=True).start()
         input()
-        done.set()  # break the loop
+        done.set()
     else:
         iteration()
