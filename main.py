@@ -127,5 +127,7 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
         Thread(target=loop, args=[done], daemon=True).start()
         input()
         done.set()
+        system('cls' if name == 'nt' else 'clear')
+        
     else:
         iteration()
