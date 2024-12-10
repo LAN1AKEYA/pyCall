@@ -46,9 +46,11 @@
         "preset": {
             "hrs": true,
             "min": true,
-            "sec": true
+            "sec": false
         },
         "clock": false
     },
-    "flowMode": true
+    "flowMode": true,
+    "updateTime": 30
+
 }

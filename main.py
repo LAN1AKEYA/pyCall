@@ -78,9 +78,9 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
                 if (data['time']['preset']['hrs']):
                     time += hrs + (':' if (iterator) else ' ')
                 if (data['time']['preset']['min']):
-                    time += min + (':' if (iterator) else ' ')
+                    time += min
                 if (data['time']['preset']['sec']):
-                    time += sec
+                    time += (':' if (iterator) else ' ') + sec
                 timePadCounter = math.floor((terminalWidth / 2) - (len(time) / 2))
                 print(nl + formatInvert(str(' ' * timePadCounter) + time + (' ' * (timePadCounter if (terminalWidth == timePadCounter * 2 + len(time)) else timePadCounter + 1))))
 
@@ -116,7 +116,7 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
 
     iterator = True
 
-    def loop(done, interval=0.5):
+    def loop(done, interval=data['updateTime']):
         while not done.wait(interval):
             iteration()
         
