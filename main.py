@@ -60,14 +60,11 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
 
 
     def iteration():
-            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth, description, iterator, nxtLessSwitch
+            global maxLen, tableWidth, timeNow, dayNow, halfPadding, terminalWidth, description, iterator, nxtLessSwitch, hrs, min, sec
             if (data['clearTerminal']):
                 system('cls' if name == 'nt' else 'clear')
             dayNow = datetime.today().weekday()
             terminalWidth = get_terminal_size().columns
-            sec = str(datetime.now().second) if datetime.now().second > 9 else str(0) + str(datetime.now().second)
-            min = str(datetime.now().minute) if datetime.now().minute > 9 else str(0) + str(datetime.now().minute)
-            hrs = str(datetime.now().hour) if datetime.now().hour > 9 else str(0) + str(datetime.now().hour)
             timeNow = int(hrs) * 60 + int(min)
             if (data['time']['clock']):
                 iterator = not iterator
@@ -76,11 +73,11 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
             if (data["time"]["show"]):
                 time = ''
                 if (data['time']['preset']['hrs']):
-                    time += hrs + (':' if (iterator) else ' ')
+                    time += str(hrs) + (':' if (iterator) else ' ')
                 if (data['time']['preset']['min']):
-                    time += min
+                    time += str(min)
                 if (data['time']['preset']['sec']):
-                    time += (':' if (iterator) else ' ') + sec
+                    time += (':' if (iterator) else ' ') + str(sec)
                 timePadCounter = math.floor((terminalWidth / 2) - (len(time) / 2))
                 print(nl + formatInvert(str(' ' * timePadCounter) + time + (' ' * (timePadCounter if (terminalWidth == timePadCounter * 2 + len(time)) else timePadCounter + 1))))
 
@@ -116,9 +113,37 @@ with open(f"{currentDir}/data-call.json", 'r', encoding='utf-8') as json_file:
 
     iterator = True
 
+    sec = str(datetime.now().second) if datetime.now().second > 9 else str(0) + str(datetime.now().second)
+    min = str(datetime.now().minute) if datetime.now().minute > 9 else str(0) + str(datetime.now().minute)
+    hrs = str(datetime.now().hour) if datetime.now().hour > 9 else str(0) + str(datetime.now().hour)
+
+
+    def checkTime():
+        global sec, min, hrs
+        if (data['time']['preset']['sec']):
+            getSec = str(datetime.now().second) if datetime.now().second > 9 else str(0) + str(datetime.now().second)
+            if (sec != getSec):
+                sec = getSec
+                return True
+
+        if (data['time']['preset']['min']):
+            getMin = str(datetime.now().minute) if datetime.now().minute > 9 else str(0) + str(datetime.now().minute)
+            if (min != getMin):
+                min = getMin
+                return True
+            
+        if (data['time']['preset']['hrs']):
+            getHrs = str(datetime.now().hour) if datetime.now().hour > 9 else str(0) + str(datetime.now().hour)
+            if (hrs != getHrs):
+                hrs = getHrs
+                return True
+        
+        return False
+
     def loop(done, interval=data['updateTime']):
         while not done.wait(interval):
-            iteration()
+            if (checkTime()):
+                iteration()
         
     if (data["flowMode"]):
         iteration()
