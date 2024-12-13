@@ -40,7 +40,7 @@
             "0", "46"
         ]
     },
-    "clearTerminal": false,
+    "clearTerminal": true,
     "time": {
         "show": true,
         "preset": {
@@ -50,6 +50,7 @@
         },
         "clock": false
     },
+    "showHint": true,
     "flowMode": true,
     "updateTime": 1
 
